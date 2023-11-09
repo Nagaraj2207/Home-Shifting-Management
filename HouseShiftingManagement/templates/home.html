@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/title.png' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoveEase</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="{% static "css/home.css" %}">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg fixed-top" style="background-color:ghostwhite">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="{% url "home" %}">
+          <img src="{% static "images/home.png" %}" alt="Logo" width="30" height="24" class="d-inline-block align-text-top"><b>MoveEase</b>&nbsp<small style="opacity: 90%; font-size: 8px" >Packers and Movers</small></a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse " id="navbarNav">
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav active"> 
+                    <li class="nav-item">
+                        <a class="btn btn-dark nav-link" href="{% url "home" %}">Home</a>
+                    </li>
+                </ul>|
+                <ul class="navbar-nav"> 
+                    <li class="nav-item">
+                        <a class="btn btn-dark nav-link" id="register" href="#">Sign up</a>
+                    </li>
+                </ul>|
+                <ul class="navbar-nav"> 
+                    <li class="nav-item">
+                        <a class="btn btn-dark nav-link" id="login" href="#">Sign in</a>
+                    </li>
+                </ul>|
+                <ul class="navbar-nav">
+                    <li class="nav-item"> 
+                        <a class="btn btn-dark nav-link" href="#">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="25" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                        </svg>&nbsp{{user}}</a>
+                    </li>
+                </ul>
+            </div>
+          </div>
+        </div>
+    </nav>
+    <div id="carouselExampleAutoplaying" class="carousel slide carousel-fade" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="{% static "images/slide1.jpg" %}" class="d-block w-100" alt="slid1">
+          </div>
+          <div class="carousel-item">
+            <img src="{% static "images/slide2.jpg" %}" class="d-block w-100" alt="slid2">
+          </div>
+          <div class="carousel-item">
+            <img src="{% static "images/slide3.jpg" %}" class="d-block w-100" alt="slid3">
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+    <div class="quotation">
+        <div class="quote_title"><h3>Get the instant Free Quatation Through Mail</h3></div>
+        <a href="{% url  "free_quote" %}" class="btn btn-success quote_button">Enquiry Free Quote</a>
+    </div>
+    <form method="post" id="register_forms" class="register-form bg-light p-4 rounded">
+        {% csrf_token %}
+        <h1 class="mb-4">Register Form</h1>
+        <input type="hidden" id="userid" name="userid" required>
+        <div class="mb-3">
+            <input type="text" id="name" name="name" class="form-control" required placeholder="Name">
+        </div>
+        <div class="mb-3">
+            <input type="email" id="email" name="email" class="form-control" required placeholder="Email">
+        </div>
+        <div class="mb-3">
+            <input type="number" id="contact" name="contact" class="form-control" required placeholder="Enter Your Contact">
+        </div>
+        <div class="mb-3">
+            <input type="password" id="password1" name="password1" class="form-control" required placeholder="Password">
+        </div>
+        <div class="mb-3">
+            <input type="password" id="password2" name="password2" class="form-control" required placeholder="Confirm Password">
+        </div>
+        <div class="mb-3">
+            <input type="text" id="otp" name="otp" class="form-control" required placeholder="Enter your otp">
+        </div>
+        <center><div id="reg_error" style="color: red;"></div></center><br>
+        <button type="submit" id="registersubmit" class="btn btn-primary">Register</button>
+    </form>
+    <form method="post" id="login_form"   class="login-form bg-light p-4 rounded">
+        {% csrf_token %}
+        <h1 class="mb-4">Login Form</h1>
+        <div class="mb-3">
+            <label for="email"  class="form-label">Email:</label>
+            <input type="email" id="email-login" name="email" class="form-control" required placeholder="Enter your Email">
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Password:</label>
+            <input type="password" id="password-login" name="password" class="form-control" required placeholder="Enter your password">
+        </div>
+        <center><div id="log_error" style="color: red;"></div></center><br>
+        <button type="submit" id="loginsubmit" class="btn btn-primary">Login</button><br><br>
+        <button  id="forgot_button" class="btn btn-primary ">Forgot Password</button>
+        <center><div id="reglog_error" style="color: red;"></div></center><br>
+        <a href="#Register" id="reglog_button" class="btn btn-primary ">Register Here</a>
+        
+    </form>
+    <form method="post" id="forgot_form" class="forget_form bg-light p-4 rounded">
+        {% csrf_token %}
+        <h1 class="mb-4">Reset Password</h1>
+        <div class="mb-3">
+            <input type="email" id="email-forgot" name="email" class="form-control" required placeholder="Enter your email">
+        </div>
+        <div class="mb-3">
+            <input type="password" id="password1-forgot" name="password1" class="form-control" required placeholder="Enter new password">
+        </div>
+        <div class="mb-3">
+            <input type="password" id="password2-forgot" name="password2" class="form-control" required placeholder="Confirm password">
+        </div>
+        <div class="mb-3">
+            <input type="number" id="otp_forget" name="otp_forget" class="form-control" required placeholder="Enter your otp">
+        </div>
+        <center><div id="forgot_error" style="color: red;"></div></center><br>
+        <button type="submit" id="forgot_submit" class="btn btn-primary">Reset Password</button><br><br>
+       <center> <button  id="forgot_cancel" class="btn btn-primary">cancel</button></center>
+    </form>
+<div class="Service-card">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Services We Offer</h5>
+                    <div class="icon-description-row">
+                        <div class="icon-description">
+                            <img src="{% static "images/city1.jpg" %}" alt="Service 1">
+                            <p>Within City</p>
+                        </div>
+                        <div class="icon-description">
+                            <img src="{% static "images/city2.jpg" %}" alt="Service 2">
+                            <p>Between Cities</p>
+                        </div>
+                        <div class="icon-description">
+                            <img src="{% static "images/city3.jpg" %}" alt="Service 3">
+                            <p>City Tempo</p>
+                        </div>
+                        <div id="city4"  class="icon-description">
+                            <img src="{% static "images/city4.jpg" %}" alt="Service 4">
+                            <p>Vechile Shifting</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card-work">
+    <div class="title">How it Works?</div>
+    <div class="content">
+        <div class="step">
+            <img src="https://assets.nobroker.in/hs-new/public/Packers-And-Movers-New/shifting-requirement.svg" alt="Step 1">
+            <div class="step-text">
+                <div class="step-title">Share your Shifting Requirement</div>
+                <div class="step-description">Help us by providing when and where do you want to move</div>
+            </div>
+        </div>
+        <div class="step">
+            <img src="https://assets.nobroker.in/hs-new/public/Packers-And-Movers-New/instant-quote.svg" alt="Step 2">
+            <div class="step-text">
+                <div class="step-title">Receive Free Instant Quote</div>
+                <div class="step-description">Get guaranteed lowest priced quote for your shifting instantly</div>
+            </div>
+        </div>
+        <div class="step">
+            <img src="https://assets.nobroker.in/hs-new/public/Packers-And-Movers-New/quality-service-expert.svg" alt="Step 3">
+            <div class="step-text">
+                <div class="step-title">Assign Quality Service Expert</div>
+                <div class="step-description">To ensure safe relocation quality service expert will be allotted for your movement</div>
+            </div>
+        </div>
+        <div class="step">
+            <img src="https://assets.nobroker.in/hs-new/public/Packers-And-Movers-New/heavy-lifting.svg" alt="Step 4">
+            <div class="step-text">
+                <div class="step-title">Leave the Heavy Lifting to Us</div>
+                <div class="step-description">Enjoy hassle-free on-time movement of your household goods</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="my_cards" class="card">
+    <div style="margin-bottom:16px"><h4>Our happy customers</h4></div>
+    <div class="card-container">
+        {% for rev in review %}
+        <div class="card">
+            <div class="flex items-center mb-4 mb-2.5">
+                <div class="relative mr-4">
+                    <div class="inline-block align-middle bg-gray-200 overflow-hidden rounded-full w-4.2p h-4.2p">
+                        <img src="{% static "images/default.png" %}" alt="review" loading="lazy" class="transition-opacity opacity-100" width="50px" height="50px">
+                    </div>
+                    <div class="flex items-center justify-center">
+                        <div class="absolute">
+                            <div class="flex pt-px pb-px pl-1 pr-1 rounded-md text-10">
+                                <span class="pr-1 text-black">{{rev.rating}}</span>
+                                <div class="flex items-center">
+                                    <img src="https://assets.nobroker.in/hs-new/public/Home-Services/star-icon.svg" alt="star" loading="lazy" width="10" height="10" placeholder="path_to_placeholder_image.jpg" class="transition-opacity opacity-100 undefined">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="font-bold text-18">{{rev.name}}</div>
+                    <div style="font-size: 12px"><span class="flex items-center pr-1">Packers And Movers (intercity Movement)</span></div>
+                </div>
+            </div>
+            <div>
+                <p style="opacity: 90%; font-size: 16px" class="">
+                    {{rev.comments}}
+                </p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+        $(document).ready(function(){
+            $("#register_forms").hide();
+            $("#login_form").hide();
+            $("#forgot_form").hide();
+            let count = 0;
+            $("#reglog_button").hide();
+           
+            $("#register").click(function() {
+                $("#register_forms").toggle();
+                $("#login_form").hide();
+                $("#forgot_form").hide();
+                $("#login_form")[0].reset();log_error
+                $("#forgot_button").show();
+                $("#reglog_button").hide();
+                $("#reglog_error").hide();
+                $("#log_error").hide();
+            });
+
+            $("#login").click(function() {
+                $("#login_form").toggle();
+                $("#register_forms")[0].reset();
+                $("#reg_error").hide();
+                $("#register_forms").hide();
+                $("#forgot_form").hide();
+            });
+
+            $("#forgot_button").click(function(){
+                $("#forgot_form").show();
+                $("#register_forms").hide();
+                $("#login_form").hide();
+            });
+
+            $("#forgot_cancel").click(function(){
+                $("#forgot_form").hide();
+            });
+
+            $("#reglog_button").click(function(){
+                $("#login_form")[0].reset();
+                $("#register_forms").show();
+                $("#login_form").hide();
+                $("#forgot_button").show();
+                $("#reglog_button").hide();
+                $("#reglog_error").hide();
+            });
+    
+            $("#registersubmit").click(function (e) {
+                e.preventDefault();
+                let userid = $("#userid").val();
+                let name = $('#name').val();
+                let email = $("#email").val();
+                let contact = $("#contact").val();
+                let password1 = $("#password1").val();  
+                let password2 = $("#password2").val();  
+                let otp = $("#otp").val();
+    
+                mydata = {userid: userid, name: name, email: email, contact: contact, password1: password1, password2: password2,otp: otp};
+                $.ajax({
+                    url: "{% url 'register' %}",
+                    type: "POST",
+                    data: mydata,
+                    success: function(data) {
+                        x = data.Error;
+                        y = data.message;
+                        if (x) {
+                            $("#reg_error").show();
+                            $("#reg_error").html(x);
+                        }
+                        else if (y) {
+                            alert(y)
+                            $("#reg_error").hide();
+                            $("#register_forms")[0].reset();
+                            $("#register_forms").hide();
+                        }
+                    }
+                });
+            });
+
+            
+            
+            $("#loginsubmit").click(function (e) {
+            e.preventDefault();
+            let email = $("#email-login").val(); 
+            let password = $("#password-login").val(); 
+            
+            mydata = {email: email, password: password};
+            $.ajax({
+                url: "{% url 'login' %}",
+                type: "POST",
+                data: mydata,
+                success: function (data) {
+                        let x = data.data_user;
+                        let y = data.Error;
+
+                        if (y === "Email does not exist") {
+                            count += 1;
+                            console.log(count);
+                        }
+                        else if (y === "password is incorrect"){
+                            count = 0;
+                            
+                        }
+
+                        if (count >= 3) {
+                            console.log(count);
+                            console.log("1");
+                            $("#log_error").hide();
+                            $("#forgot_button").hide();
+                            $("#reglog_error").html("This email is Not Registered. Please register first.");
+                            $("#reglog_button").show();
+                            $("#reglog_error").show();
+                            
+                        }
+
+                        else if (count <= 3) {
+                            console.log("Error")
+                            $("#log_error").html(y);
+                            $("#log_error").show();
+                            $("#forgot_button").show();
+                            $("#reglog_button").hide();
+                            $("#reglog_error").hide();
+                        }
+
+                        if (x) {
+                            if (x.customer) {
+                                $("#forgot_button").show();
+                                $("#login_form")[0].reset();
+                                $("#login_form").hide();
+                                $("#log_error").hide();
+                                $("#reglog_button").hide();
+                                $("#reglog_error").hide();
+                                window.location.href = "{% url 'customer_app' %}";
+                            } else if (x.move_ease_person) {
+                                $("#forgot_button").show();
+                                $("#login_form")[0].reset();
+                                $("#login_form").hide();
+                                $("#log_error").hide();
+                                $("#reglog_button").hide();
+                                $("#reglog_error").hide();
+                                window.location.href = "{% url 'move_ease_app' %}";
+                            } else if (x.delivery_person) {
+                                $("#forgot_button").show();
+                                $("#login_form")[0].reset();
+                                $("#login_form").hide();
+                                $("#log_error").hide();
+                                $("#reglog_button").hide();
+                                $("#reglog_error").hide();
+                                window.location.href = "{% url 'delivery_app' %}";
+                            }
+                        }
+                    }
+                });
+            });
+
+            $("#contact").mouseleave(function (e) {
+                e.preventDefault();
+                let contact = $("#contact").val();
+                console.log(contact);
+                console.log(contact.length);
+                if (contact.length === 10){
+                    mydata = {contact: contact};
+                    $.ajax({
+                        url: "{% url 'verify_login' %}",
+                        type: "POST",
+                        data: mydata,
+                        success: function(data) {
+                            x = data.Message;
+                            if (x){
+                                console.log(x)
+                            }
+                        }
+                    });
+                } 
+            });
+            
+            
+            $("#forgot_submit").click(function (e) {
+                e.preventDefault();
+                let email = $("#email-forgot").val(); 
+                let password1 = $("#password1-forgot").val();
+                let password2 = $("#password2-forgot").val();
+                let otp_forget = $("#otp_forget").val(); 
+                mydata = {email: email, password1: password1, password2: password2, otp_forget:otp_forget};
+                $.ajax({
+                    url: "{% url 'forgot_password' %}",
+                    type: "POST",
+                    data: mydata,
+                    success: function(data) {
+                        x = data.message;
+                        y = data.Error;
+                        if (x){
+                            alert(x)
+                            $("#forgot_error").hide();
+                            $("#forgot_form")[0].reset();
+                            $("#forgot_form").hide();
+                        }
+                        else if (y){
+                            $("#forgot_error").html(y)
+                        }
+                    }
+                    
+                }); 
+            });
+
+            $("#email-forgot").mouseleave(function (e) {
+                e.preventDefault();
+                let email = $("#email-forgot").val();
+                mydata = {email: email};
+                if (email.length > 13){
+                    $.ajax({
+                        url: "{% url 'verify_login' %}",
+                        type: "POST",
+                        data: mydata,
+                        success: function(data) {
+                            x = data.Error
+                            y = data.message
+                            if (x){
+                                alert(x)
+                            }
+                            else if (y){
+                                alert(y)
+                            }
+                        }
+                    });
+                } 
+            });
+        });
+    </script>
+<footer class="text-white bg-dark">
+    <br>
+    <center>
+        <h3><img src="{% static "images/title.png" %}" alt="Logo" width="30" height="34" class="d-inline-block align-text-top">&nbspMoveEase</h3></center>
+    <div class="container py-4 py-lg-5">
+        <div class="row justify-content-center">
+            <div class="col-sm-4 col-md-3 text-center text-lg-start d-flex flex-column item">
+                <h3 class="fs-6 text-white">Services</h3>
+                <ul class="list-unstyled">
+                    <li><a class="link-light" href="#">Within City</a></li>
+                    <li><a class="link-light" href="#">Between Cities</a></li>
+                    <li><a class="link-light" href="#">City Tempo</a></li>
+                </ul>
+            </div>
+            <div class="col-sm-4 col-md-3 text-center text-lg-start d-flex flex-column item">
+                <h3 class="fs-6 text-white">About</h3>
+                <ul class="list-unstyled">
+                    <li><a class="link-light" href="#">Company</a></li>
+                    <li><a class="link-light" href="#">Team</a></li>
+                    <li><a class="link-light" href="#">Legacy</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-sm-4 col-md-3 text-center text-lg-start d-flex flex-column item">
+                <h3 class="fs-6 text-white">Careers</h3>
+                <ul class="list-unstyled">
+                    <li><a class="link-light" href="#">Job openings</a></li>
+                    <li><a class="link-light" href="#">Employee success</a></li>
+                    <li><a class="link-light" href="#">Benefits</a></li>
+                </ul>
+            </div>
+            <hr>
+            <div class="footer-content">
+                <p class="mb-0">Copyright © 2023 Brand</p>
+                <ul class="list-inline mb-0">
+                    <li class="list-inline-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-facebook">
+                        <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"></path>
+                        </svg>
+                    </li>
+                    <li class="list-inline-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-twitter">
+                        <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"></path>
+                        </svg>
+                    </li>
+                    <li class="list-inline-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-instagram">
+                        <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z"></path>
+                        </svg>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>    
+</body>
+</html>

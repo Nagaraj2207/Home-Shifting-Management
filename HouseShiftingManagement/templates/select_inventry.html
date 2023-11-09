@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/title.png' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoveEase</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{% static "css/inventry.css" %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg fixed-top" style="background-color: ghostwhite">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'home' %}">
+                <img src="{% static 'images/home.png' %}" alt="Logo" width="30" height="24"
+                class="d-inline-block align-text-top"><b>MoveEase</b>&nbsp<small style="opacity: 90%; font-size: 8px">Packers and Movers</small>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse " id="navbarNav">
+                <ul class="navbar-nav active">
+                    <li class="nav-item">
+                        <a class="btn btn-dark nav-link" href="{% url 'customer_app' %}">Home</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav active">
+                  <li class="nav-item">
+                    <a class="btn btn-dark nav-link" href="{% url 'my_booking' %}">My Booking</a>
+                  </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item dropdown">
+                        <a class="btn btn-dark  nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                           data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                 class="bi bi-person-circle" viewBox="0 0 16 16">
+                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                                <path fill-rule="evenodd"
+                                      d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                            </svg>
+                            {{ user }}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="userDropdown">
+                            <a class="dropdown-item" href="{% url "profile_setting" %}">Profile</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{% url 'home' %}">Sign out</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+  <div class="card information">
+    <div class="card my_card">
+        <form id="my_form" class="form" method="Post">
+          {% csrf_token %}
+          <div class="row my_row">
+            <div class="col-md-6">
+              <label for="bhkType">Select the BHK Type:</label><br><br>
+              <div class="button-options">
+                <input type="radio" id="1BHK" class="bhktype" name="bhkType" value="1BHK">
+                <label for="1BHK" id="1bhk_button"  class="button-label bhk_button">1BHK</label>
+                
+                <input type="radio" id="2BHK" class="bhktype" name="bhkType" value="2BHK">
+                <label for="2BHK" id="2bhk_button" class="button-label bhk_button">2BHK</label>
+                
+                <input type="radio" id="3BHK" class="bhktype" name="bhkType" value="3BHK">
+                <label for="3BHK" id="3bhk_button" class="button-label bhk_button">3BHK</label>
+              </div><br><br>
+              
+              <label for="time">When you need the service:</label><br><br>
+              <input type="datetime-local" id="time" name="time"><br><br>
+              <label for="cortans">Do You Need Extra Cortans (optional) :</label><br><br>
+              <input type="number" id="cortans" name="cortans" value=0><br>
+              <small>Note: Per Extra Cortans 60 Rs</small>
+            </div>
+          
+            <div class="col-md-6">
+              <label for="Vehicle">Select a Vehicle:</label>
+              <div class="card Vehicle_card">
+                <div class="custom-select">
+                  <div class="select-options">
+                    <div class="select-item" data-value="Tata 407">
+                      <div id="Tata" class="card image_card info_card">
+                        <div class="header">
+                          <div class="img_div">
+                          <img width="100" height="65" class="mr-1p" alt="Tata 407" src="https://assets.nobroker.in/catalog/tata_407.png" style="mix-blend-mode: multiply;">
+                          </div>
+                          <div class="title_div">
+                            <p>Tata 407<br>                        
+                            Capacity: 9 ft, 2500 kg</p>
+                          </div>
+                        </div>
+                        <div class="info_div">
+                          <p>1 Double Bed - Dismantlable |1 Double Bed Mattress - Non Foldable |
+                            1 Fridge Single Door upto 299 lts |1 WashingMachine 7-7.9kg |
+                            5 Plastic Chair |1 Study /Computer Table |
+                            1 LCD/LED 40inch & Below | 2 LPG Gas Cylinder |
+                            1 Gas Stove / Hob |1 Office Chair | Dinning Table 2 seater with 2 chairs 
+                            |5 Suitcase Medium |1 Microwave Oven & OTG |</p>
+                        </div>
+                        <div class="footer_div">
+                          <p>15 Cortans</p>
+                          <p>price: 6,900</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="select-item" data-value="Dost">
+                      <div id="Dost" class="card image_card info_card">
+                        <div class="header">
+                            <div class="img_div">
+                              <img width="100" height="65" class="mr-1p" alt="Dost" src="https://assets.nobroker.in/catalog/dost.png" style="mix-blend-mode: multiply;">
+                            </div>
+                            <div class="title_div">
+                              <p> Dost<br>
+                              Capacity: 8 ft, 1500 kg</p>
+                            </div>
+                        </div>
+                        <div class="info_div">
+                          <p>1 Double Bed - Dismantlable |
+                            1 Double Bed Mattress - Non Foldable |
+                            1 Fridge Single Door upto 299 lts |
+                            1 WashingMachine <6.9kg |5 Plastic Chair | 1 Study /Computer Table |
+                            1 LCD/LED 40inch & Below |2 LPG Gas Cylinder |
+                            1 Gas Stove / Hob |1 Office Chair |10 Small pots |</p>
+                        </div>
+                        <div class="footer_div">
+                          <p>10 Cortans</p>
+                          <p>price: 6,100</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="select-item" data-value="Eicher Truck">
+                      <div id="Eicher" class="card image_card info_card">
+                        <div class="header">
+                          <div class="img_div">
+                            <img width="100" height="65" class="mr-1p" alt="Dost" src="https://assets.nobroker.in/catalog/eitcher_14feet.png" style="mix-blend-mode: multiply;">
+                          </div>
+                          <div class="title_div">
+                            <p>Eicher Truck<br>
+                              Capacity: 14 ft, 3500 kg</p>
+                          </div>
+                        </div>
+                        <div class="info_div">
+                          <p>1 Double Bed - Dismantlable |1 Double Bed Mattress - Non Foldable |
+                            3 Seater Sofa |1 WashingMachine <9kg |
+                            1 Study /Computer Table |2 LPG Gas Cylinder |
+                            1 LCD/LED 42inch - 50inch |1 Microwave Oven & OTG |
+                            1 Water Purifiers/RO unit |1 Washing Machine 7-7.9kg |
+                            Dinning Table 4 seater with 4 chairs |5 Suitcase Medium |
+                            1 Steel Almirah Large |1 Bicycle Kids |
+                            1 Air Conditioner/Cooler |10 Small pots |</p>
+                        </div>
+                        <div class="footer_div">
+                          <p>20 Cortans</p>
+                          <p>price: 9,000</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="select-item" data-value="Tata Truck">
+                      <div id="bigTata" class="card image_card info_card">
+                        <div class="header">
+                          <div class="img_div">
+                            <img width="100" height="65" class="mr-1p" alt="Dost" src="https://assets.nobroker.in/catalog/eitcher_22feet.png" style="mix-blend-mode: multiply;">
+                          </div>
+                          <div class="title_div">
+                            <p>Tata Truck<br>
+                            Capacity: 22 ft, 8000 kg</p>
+                          </div>
+                        </div>
+                          <div class="info_div">
+                            <p>2 Double Bed - Dismantlable |2 Double Bed Mattress - Non Foldable |
+                              5+2 Seater Sofa |1 WashingMachine <9kg |
+                              1 Study /Computer Table |2 LPG Gas Cylinder |
+                              1 LCD/LED 42inch - 50inch |1 Microwave Oven & OTG |
+                              1 Water Purifiers/RO unit |1 Double Door upto 499 lts |
+                              Dinning Table 6 seater with 6 chairs |5 Suitcase Medium |
+                              1 Bicycle Kids |1 Air Conditioner/Cooler |
+                              10 Small pots |1 Mixer/Grinder |
+                              1 Bicycle Adult |1 Recliner Sofa 1-seater |
+                              1 Foldable Clothes Dryer |1 Floor/table lamp |</p>
+                          </div>
+                          <div class="footer_div">
+                            <p>40 Cortans</p>
+                            <p>price: 15,900</p>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                  <input type="hidden" id="selected-vehicle" name="selectedVehicle">
+                </div>
+              </div>
+            </div>
+          </div>
+          <center><div id="my_error" style="color: red;"></div></center>
+          <button id="booksubmit" type="submit" style="width: 100%;" class="btn btn-primary">Book Now</button>
+        </div>
+      </form>
+      <div id="payment_card" class="payment_card"></div>
+    </div>  
+  </div>
+      
+
+<script>
+    $(document).ready(function () {
+        $(".select-item").click(function () {
+            const selectedValue = $(this).attr("data-value");
+            $("#selected-vehicle").val(selectedValue);
+        });
+
+        $("#Tata").click(function () {
+          $("#Tata").addClass("active_card")
+          $("#Tata").removeClass("info_card")
+          $("#Dost").removeClass("active_card")
+          $("#Eicher").removeClass("active_card")
+          $("#bigTata").removeClass("active_card")
+        });
+
+        $("#Dost").click(function () {
+          $("#Dost").addClass("active_card")
+          $("#Dost").removeClass("info_card")
+          $("#Tata").removeClass("active_card")
+          $("#Eicher").removeClass("active_card")
+          $("#bigTata").removeClass("active_card")
+        });
+
+        $("#Eicher").click(function () {
+          $("#Eicher").addClass("active_card")
+          $("#Eicher").removeClass("info_card")
+          $("#Dost").removeClass("active_card")
+          $("#Tata").removeClass("active_card")
+          $("#bigTata").removeClass("active_card")
+        });
+
+        $("#bigTata").click(function () {
+          $("#bigTata").addClass("active_card")
+          $("#bigTata").removeClass("info_card")
+          $("#Dost").removeClass("active_card")
+          $("#Eicher").removeClass("active_card")
+          $("#Tata").removeClass("active_card")
+        });
+
+        $("#1bhk_button").click(function (){
+          $("#1bhk_button").addClass("bh_button")
+          $("#2bhk_button").removeClass("bh_button")
+          $("#3bhk_button").removeClass("bh_button")
+        });
+
+        $("#2bhk_button").click(function (){
+          $("#2bhk_button").addClass("bh_button")
+          $("#1bhk_button").removeClass("bh_button")
+          $("#3bhk_button").removeClass("bh_button")
+        });
+
+        $("#3bhk_button").click(function (){
+          $("#3bhk_button").addClass("bh_button")
+          $("#1bhk_button").removeClass("bh_button")
+          $("#2bhk_button").removeClass("bh_button")
+        });
+
+        $("#booksubmit").click(function(e){
+          e.preventDefault();
+          let bhktype = $("input[name='bhkType']:checked").val();
+          let time = $("#time").val();
+          let cortons = $("#cortans").val();
+          let vechile = $("#selected-vehicle").val();
+          console.log(vechile);
+          my_data = {"type": bhktype, "time": time,"cortons":cortons,"vechile":vechile}
+          $.ajax({
+            url:"{% url 'payment_receipts' %}",
+            type:"POST",
+            data:my_data,
+            success:function(data){
+              if (data.message == "success") {
+                  let output =( `
+                  <div class="card receipt-card">
+                    <div class="card-body">
+                        <center><h4 class="card-title"><b>Payment Receipt</b></h4></center>
+                        <div class="table-responsive">
+                          <table class="table">
+                              <tr>
+                                <th>Shifting From</th>
+                                <th>Shifting To</th>
+                                <th>BHK</th>
+                                <th>Extra Cortans</th>
+                                <th>Vehicle</th>
+                              </tr>
+                              <tr>
+                                <td class="table_details">${data.from_location}</td>
+                                <td class="table_details">${data.to_location}</td>
+                                <td class="table_details">${bhktype}</td>
+                                <td class="table_details">${cortons}</td>
+                                <td class="table_details">${vechile}</td>
+                              </tr>
+                              <tr>
+                                <td colspan="2" class="side_heading">Distance Price</td>
+                                <td colspan="3">${data.total_km_price.toFixed(2)}</td>
+                              </tr>
+                              <tr>
+                                <td colspan="2" class="side_heading">BHK Price</td>
+                                <td colspan="3">${data.bhk_price}</td>
+                              </tr>
+                              <tr>
+                                <td colspan="2" class="side_heading">Cortans Price</td>
+                                <td colspan="3">${data.cortons_price}</td>
+                              </tr>
+                              <tr>
+                                <td colspan="2" class="side_heading">Vehicle Price</td>
+                                <td colspan="3">${data.vechiles_price}</td>
+                              </tr>
+                              <tr>
+                                <td colspan="2" class="side_heading">Delivery Charges</td>
+                                <td colspan="3">${data.delivery_price}</td>
+                              </tr>
+                              <tr>
+                                <td colspan="2" class="side_heading">Total Cost</td>
+                                <td colspan="3">${data.total_price.toFixed(2)}</td>
+                              </tr>
+                              <tr>
+                                <td colspan="2" class="side_heading">Booking Amount (20%)</td>
+                                <td colspan="3">${data.booking_amount.toFixed(2)}</td>
+                              </tr>
+                              <tr>
+                                <td colspan="2" class="side_heading">Pay When Delivered</td>
+                                <td colspan="3">${data.pay_when_delivered.toFixed(2)}</td>
+                              </tr>
+                            </tbody>
+                          </table>                
+                      </div><br>
+                      <a href="{% url "payment" %}" class="btn btn-danger" style="width: 100%;">Pay Now (${data.booking_amount.toFixed(2)})</a>
+                    </div>
+                  </div>`);
+                $("#payment_card").html(output);
+                $("#my_form")[0].reset();
+                $("#my_error").hide();
+                $("#1bhk_button").removeClass("bh_button")
+                $("#2bhk_button").removeClass("bh_button")
+                $("#3bhk_button").removeClass("bh_button")
+                $("#bigTata").removeClass("active_card")
+                $("#Eicher").removeClass("active_card")
+                $("#Tata").removeClass("active_card")
+                $("#Dost").removeClass("active_card")
+              }
+              if (data.Error){
+                $("#my_error").show();
+                $("#my_error").html(data.Error)
+              }
+            }
+          });
+        });
+    });
+    </script>
+    
+    
+    
+    
+    
+    

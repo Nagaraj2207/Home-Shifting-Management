@@ -1,0 +1,189 @@
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+}
+
+.navbar-brand img {
+  margin-right: 10px;
+  height: 24px; 
+}
+
+.navbar-nav a {
+  text-decoration: none;
+  color: #000;
+}
+
+.navbar-nav a:hover {
+  color: #f8b500;
+}
+
+
+.my_card {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 20px;
+  margin-top: 3%;
+  margin-left: 3%;
+  max-width: 800px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+.button-options {
+  display: flex;
+  justify-content: space-between; 
+  gap: 5px;
+  margin-top: 20px;
+}
+
+.button-label {
+  flex: 1;
+  padding: 10px 20px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s;
+}
+
+.bhk_button{
+  background-color: aliceblue;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.bhk_button:hover{
+  border-radius: 5px;
+  background-color: #f0f0f0;
+}
+
+.bh_button{
+  border-radius: 5px;
+  background-color:gray;
+  border: 1px solid #ccc;
+  color: white;
+}
+
+.bh_button:hover{
+  border-radius: 5px;
+  background-color: #ccc;
+  color: white;
+}
+
+.Vehicle_card {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+  overflow-x: auto;
+  max-height: 350px;
+  width: 100%;
+}
+
+.image_card {
+  border-radius: 5px;
+  padding: 15px;
+  padding-bottom: 0px;
+  width: 100%;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-bottom: 20px;
+}
+
+.info_card{
+  background-color: #fff;
+  border: 1px solid #ccc;
+}
+
+.info_card:hover {
+  background-color: #f0f0f0;
+}
+
+.active_card{
+  background-color:gray;
+  border: 1px solid #ccc;
+  color: #f5f5f5;
+}
+
+.active_card:hover{
+  background-color:color-mix(in srgb, gray 80%, white 20%);
+  border: 1px solid #ccc;
+  color: #f5f5f5;
+}
+
+
+
+input[type="radio"] {
+  opacity: 0;
+}
+.information{
+  margin-top: 59px;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  width: 100%;
+  height: 50%;
+  padding-bottom:5%;
+  background-color:mediumpurple;
+}
+
+.image_card .header{
+  display: flex;
+  flex-direction: row;
+  gap:35px;
+}
+.image_card .info_div p{
+  font-size: 10px;
+}
+
+.image_card .footer_div{
+  display: flex;
+  flex-direction: row;
+  gap:140px;
+  font-size: 15px;
+  font-weight:bold;
+}
+.my_row{
+  margin-bottom: 20px;
+}
+
+.payment_card{
+  margin-top: 3%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.receipt-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+
+.table {
+  width: 100%;
+  margin-bottom: 0;
+}
+
+
+.table th {
+  background-color:#f0f0f0;
+  font-size: 10px;
+}
+
+.table td {
+  border-top: 1px solid #e0e0e0;
+  font-size: 10px;
+  padding: 10px;
+}
+
+.table .table_details{
+  font-size: 8px;
+}
+
+.side_heading{
+  font-size: 15px;
+  font-weight: bold;
+}

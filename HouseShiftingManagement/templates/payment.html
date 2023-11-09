@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/title.png' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoveEase</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{% static "css/payment.css" %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg fixed-top" style="background-color: ghostwhite">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'home' %}">
+                <img src="{% static 'images/home.png' %}" alt="Logo" width="30" height="24"
+                class="d-inline-block align-text-top"><b>MoveEase</b>&nbsp<small style="opacity: 90%; font-size: 8px">Packers and Movers</small>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse " id="navbarNav">
+                <ul class="navbar-nav active">
+                    <li class="nav-item">
+                        <a class="btn btn-dark nav-link" href="{% url 'customer_app' %}">Home</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav active">
+                    <li class="nav-item">
+                        <a class="btn btn-dark nav-link" href="{% url 'my_booking' %}">My Booking</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item dropdown">
+                        <a class="btn btn-dark  nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                           data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                 class="bi bi-person-circle" viewBox="0 0 16 16">
+                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                                <path fill-rule="evenodd"
+                                      d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                            </svg>
+                            {{ user }}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="userDropdown">
+                            <a class="dropdown-item" href="{% url "profile_setting" %}">Profile</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{% url 'home' %}">Sign out</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="card information">
+        <div class="card payment_option_card">
+            <div class="pay_title">
+                <h4>Payment Options</h4>
+                <button id="card_button" class="btn my_button">Card Payment</button><br>
+                <button id="upi_button" class="btn my_button">UPI</button><br>
+                <button id="net_banking_button" class="btn my_button">Net Banking</button>
+            </div>
+        </div>
+        <div id="debit_card"   class="debit_card">
+            <div class="card">
+                <div style="padding-top: 20px;" class="card-header">
+                  <center> <h4> Card Payment</h4></center>
+                </div>
+                <div class="card-body">
+                    <form id="debit_card_form">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="card_number" class="form-label">Card Number</label>
+                            <input type="text" class="form-control" id="card_number" placeholder="1234 5678 9012 3456" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="expiry_date" class="form-label">Expiry Date</label>
+                            <input type="text" class="form-control" id="expiry_date" placeholder="MM/YYYY" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="cvv" class="form-label">CVV</label>
+                            <input type="text" class="form-control" id="cvv" placeholder="123" required>
+                        </div><br>
+                        <center><div id="debit_card_error" style="color: red;"></div></center><br>
+                        <button style="width: 100%;" type="submit" id="cardsubmit" class="btn btn-primary">Pay Now</button>
+                    </form>
+                </div>
+            </div>        
+        </div>
+        <div id="confirm_card" class="my_confirm_card">
+            <div class="confirm_card">
+                <h3>Are you Sure you want to pay ?</h3>
+                <button id="pay_now" class="btn btn-success">Pay Now</button>
+                <button class="btn btn-danger">Cancel</button>
+            </div>
+        </div>
+
+        <div id="upi_card" class="upi_card">
+            <div class="card">
+                <div style="padding-top: 20px;" class="card-header">
+                    <center><h4>UPI Payment</h4></center>
+                </div>
+                <div class="card-body">
+                    <form id="upi_form">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="upi_number" class="form-label">UPI Number</label>
+                            <input type="text" class="form-control" id="upi_number" placeholder="90954xxxxx" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="upi_pin" class="form-label">UPI PIN</label>
+                            <input type="password" class="form-control" id="upi_pin" placeholder="Enter UPI PIN" required>
+                        </div>
+                        <center><div id="upi_card_error" style="color: red;"></div></center><br>
+                        <button style="width: 100%;" type="submit" id="ubisubmit" class="btn btn-primary">Pay Now</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div id="net_banking_card" class="net_banking_card">
+            <div class="card">
+                <div style="padding-top: 20px;" class="card-header">
+                    <center><h4>Net Banking Payment</h4></center>
+                </div>
+                <div class="card-body">
+                    <form id="net_banking_form">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="username" placeholder="Your net banking username" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" placeholder="Your net banking password" required>
+                        </div>
+                        <center><div id="net_card_error" style="color: red;"></div></center><br>
+                        <button style="width: 100%;" id="netsubmit" type="submit" class="btn btn-primary">Pay Now</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+        $(document).ready(function () {
+            $("#debit_card").hide();
+            $("#upi_card").hide();
+            $("#net_banking_card").hide();
+            $("#debit_card_error").hide();
+            $("#upi_card_error").hide();
+            $("#net_card_error").hide();
+            $("#confirm_card").hide();
+
+            $("#card_button").click(function () {
+                $("#card_button").addClass("active_button");
+                $("#card_button").removeClass("my_button");
+                $("#upi_button").removeClass("active_button");
+                $("#net_banking_button").removeClass("active_button");
+                $("#debit_card").show();
+                $("#upi_card").hide();
+                $("#net_banking_card").hide();
+                $("#debit_card_error").hide();
+                $("#upi_card_error").hide();
+                $("#net_card_error").hide();
+            });
+
+            $("#upi_button").click(function () {
+                $("#upi_button").addClass("active_button");
+                $("#upi_button").removeClass("my_button");
+                $("#card_button").removeClass("active_button");
+                $("#net_banking_button").removeClass("active_button");
+                $("#debit_card").hide();
+                $("#upi_card").show();
+                $("#net_banking_card").hide();
+                $("#debit_card_error").hide();
+                $("#upi_card_error").hide();
+                $("#net_card_error").hide();
+            });
+
+            $("#net_banking_button").click(function () {
+                $("#net_banking_button").addClass("active_button");
+                $("#net_banking_button").removeClass("my_button");
+                $("#upi_button").removeClass("active_button");
+                $("#card_button").removeClass("active_button");
+                $("#debit_card").hide();
+                $("#upi_card").hide();
+                $("#net_banking_card").show();
+                $("#debit_card_error").hide();
+                $("#upi_card_error").hide();
+                $("#net_card_error").hide();
+            });
+            // $("#cardsubmit").click(function(e){
+            //     e.preventDefault();
+            //     $("#confirm_card").show();
+
+            // });
+            $("#cardsubmit").click(function(e){
+                e.preventDefault();
+                let card_number = $("#card_number").val();
+                let expiry_date = $("#expiry_date").val();
+                let cvv = $("#cvv").val();
+                my_data = {"card_number": card_number,"expiry_date": expiry_date,"cvv": cvv}
+                $.ajax({
+                    url:"{% url 'save_bookings' %}",
+                    type:"POST",
+                    data:my_data,
+                    success:function(data){
+                    if (data.Booking_detail == "Booking_success"){
+                        alert(data.Booking_detail)
+                        $("#debit_card_error").hide();
+                        $("#confirm_card").hide();
+                        $("#debit_card_form")[0].reset();
+                        window.location.href = "{% url 'customer_app' %}";
+
+                    }
+                    if (data.cardError){
+                        $("#confirm_card").hide();
+                        $("#debit_card_error").show();
+                        $("#debit_card_error").html(data.cardError);
+                    }
+
+                    }
+
+                });
+            });
+
+            $("#ubisubmit").click(function(e){
+                e.preventDefault();
+                let upi_number = $("#upi_number").val();
+                let upi_pin = $("#upi_pin").val();
+                my_data = {"upi_number": upi_number,"upi_pin": upi_pin}
+                $.ajax({
+                    url:"{% url 'save_bookings' %}",
+                    type:"POST",
+                    data:my_data,
+                    success:function(data){
+                        if (data.Booking_detail == "Booking_success"){
+                        alert(data.Booking_detail)
+                        $("#upi_card_error").hide();
+                        $("#upi_form")[0].reset();
+                        window.location.href = "{% url 'customer_app' %}";
+
+                    }
+                    if (data.upi_Error){
+                        $("#upi_card_error").show();
+                        $("#upi_card_error").html(data.upi_Error);
+                    }
+                    }
+
+                });
+
+            });
+            
+            $("#netsubmit").click(function(e){
+                e.preventDefault();
+                let username = $("#username").val();
+                let password = $("#password").val();
+                my_data = {"username": username,"password": password}
+                $.ajax({
+                    url:"{% url 'save_bookings' %}",
+                    type:"POST",
+                    data:my_data,
+                    success:function(data){
+                        if (data.Booking_detail == "Booking_success"){
+                        alert(data.Booking_detail)
+                        $("#net_card_error").hide();
+                        $("#net_banking_form")[0].reset();
+                        window.location.href = "{% url 'customer_app' %}";
+                    }
+                    if (data.netError){
+                        $("#net_card_error").show();
+                        $("#net_card_error").html(data.netError);
+                    }
+                    }
+
+                });
+            });
+        });
+</script>
+</body>
+</html>

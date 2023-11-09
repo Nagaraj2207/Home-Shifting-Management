@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/title.png' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoveEase</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{% static "css/move_ease.css" %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg fixed-top" style="background-color: ghostwhite">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'home' %}">
+                <img src="{% static 'images/home.png' %}" alt="Logo" width="30" height="24"
+                class="d-inline-block align-text-top"><b>MoveEase</b>&nbsp<small style="opacity: 90%; font-size: 8px">Packers and Movers</small>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse " id="navbarNav">
+                <ul class="navbar-nav active">
+                    <li class="nav-item">
+                        <a class="btn btn-dark nav-link" href="{% url 'move_ease_app' %}">Home</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav active">
+                    <li class="nav-item">
+                        <a class="btn btn-dark nav-link" href="{% url 'home' %}">Sign out</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="card information">
+        <div id="current_booking" class="current_booking">
+            <div class="card-body">
+                <h5 class="card-title">Work Assigned For Shifting</h5>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Shifting From</th>
+                            <th>Shifting To</th>
+                            <th>BHK Type</th>
+                            <th>Service Time</th>
+                            <th>Selected Vehicle</th>
+                            <th>Bill Amount</th>
+                            <th colspan="2">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody">
+                        {% for booking in word_assign %}
+                        <tr>
+                            <td>{{ booking.shifting_from }}</td>
+                            <td>{{ booking.shifting_to }}</td>
+                            <td>{{ booking.bhk_type }}</td>
+                            <td>{{ booking.service_time }}</td>
+                            <td>{{ booking.selected_vehicle }}</td>
+                            <td>{{ booking.bill_amount }}</td>
+                            <td>
+                                <button class="btn btn-primary btn-sm btn-edit px-3 assign-delivery" data-book-id="{{ booking.id }}">Delivered to Customer</button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $("#tbody").on("click", ".assign-delivery", function(){
+            let id = $(this).data("book-id");
+           
+            
+            let mydata = {bookid: id};
+        
+            let mythis = $(this);
+
+            $.ajax({
+                url: "{% url 'update_booking_detail' %}",
+                method: "POST",
+                data: mydata,
+                success: function(data){
+                    if(data.status == 1){
+                        $(mythis).closest("tr").fadeOut();
+                    }            
+                }
+            });
+        });
+    </script>
